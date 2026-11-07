@@ -1,0 +1,44 @@
+.options_macro_choices {
+    margin: 1rem 0;
+}
+
+.options_macro_choices input {
+    margin-right: 1ch;
+}
+
+.options_macro_choices > div {
+    position: relative;
+    border-color: grey;
+    border-style: solid;
+    border-width: 2px 2px 0px 1px;
+}
+
+.options_macro_choices > div:first-child {
+    border-top-width: 2px;
+}
+
+.options_macro_choices > div:last-child {
+    border-bottom-width: 2px;
+}
+
+.options_macro_choices > div:hover {
+    background-color: rgba(211, 211, 211, 0.15);
+}
+
+.options_macro_choices label {
+    display: block;
+    padding: 0.5em 1ch;
+    transition-property: background-color, color;
+    transition-duration: 0.05s;
+}
+
+.options_macro_choices .options_macro_disabled {
+    color: gray;
+}
+
+.options_macro_next button {
+    width: 100%;
+    display: block;
+    font-size: 1.5em;
+    padding: 4.5px;
+}
