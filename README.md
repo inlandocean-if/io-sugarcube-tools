@@ -5,3 +5,7 @@ Documentation may be a bit spotty, and there may be bugs. This is more or less c
 
 ## Documentation
 [\<\<options\>\>](https://github.com/inlandocean-if/io-sugarcube-tools/blob/main/docs/options.md)
+* Adds a radiobutton UI interface
+
+[Pronoun tools](https://github.com/inlandocean-if/io-sugarcube-tools/blob/main/docs/pronoun_settings.md)
+* Adds a menu & tools to manage pronouns, with the option of multiple sets of pronouns

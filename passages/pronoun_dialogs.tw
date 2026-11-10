@@ -45,6 +45,17 @@ Selected pronoun set: <<listbox "_selected_set">>
 <<set _set_name to $pronouns[_selected_set].name>>\
 Set name: <<textbox "_set_name" _set_name>>
 
+<<button "Apply default: ">>
+    <<set $pronouns[_selected_set] to new PronounSet(
+        [_set_name].concat(_pnoun_default)
+    )>>
+    <<script>>Dialog.empty();Dialog.wikiPassage("dialog-pronoun-edit");Dialog.open();<</script>>
+<</button>> <<listbox "_pnoun_default">>
+    <<option "they/them" `[true, "o", "they", "them", "their", "theirs", "themself"]`>>
+    <<option "she/her" `[false, "f", "she", "her", "her", "hers", "herself"]`>>
+    <<option "he/him" `[false, "m", "he", "him", "his", "his", "himself"]`>>
+<</listbox>>
+
 <<set _plural_verbs to $pronouns[_selected_set].plural>>\
 Plural verbs: <<listbox "_plural_verbs" autoselect>>
     <<option true>>

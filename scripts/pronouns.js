@@ -37,11 +37,8 @@ window.PronounSet = class PronounSet {
             eval(`this.${they_vars[i]}=list[${i}]`)
             eval(`this.${they_vars[i].toUpperFirst()}=list[${i}].toUpperFirst()`)
         }
-        this.they = list[0]; this.They = this.they.toUpperFirst();
-        this.them = list[1]; this.Them = this.them.toUpperFirst();
-        this.their = list[2]; this.Their = this.their.toUpperFirst();
-        this.theirs = list[3]; this.Theirs = this.theirs.toUpperFirst();
-        this.themself = list[4]; this.Themself = this.themself.toUpperFirst();
+        this.theyre = this.they + (this.plural ? "'re" : "'s"); 
+        this.Theyre = this.theyre.toUpperFirst();
 
         this.__constructGenderedTerms()
     }
