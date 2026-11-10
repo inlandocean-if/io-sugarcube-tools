@@ -1,0 +1,90 @@
+<!-- Assumes that $pronouns is used to store MC pronouns -->
+
+:: dialog-pronoun-settings [nobr]
+<<if $pronouns.length is 0>>
+    <<run $pronouns.push(new PronounSet("o"))>>
+    <<run $pronouns[0].name = "new set (default)">>
+<</if>>
+
+<<set _lbox_options to {}>>
+
+<<for _i to 0; _i lt $pronouns.length; _i++>>
+    <<capture _i>>
+        <<set _t_name to $pronouns[_i].name>>
+        <<set _count to 0>>
+        <<for _lbox_options[_t_name] gte 0>>
+            <<set _count++>>
+            <<set _t_name to $pronouns[_i].name + ` (${_count})`>>
+        <</for>>
+        <<run _lbox_options[_t_name] = _i>>
+    <</capture>>
+<</for>>
+
+Selected pronoun set: <<listbox "_selected_set">>
+    <<optionsfrom _lbox_options>>
+<</listbox>><br><br>
+<<button "Add new pronoun set">>
+    <<run $pronouns.push(new PronounSet("o"))>>
+    <<run $pronouns[$pronouns.length-1].name = "new set">>
+    <<script>>Dialog.empty();
+    State.temporary.selected_set = State.variables.pronouns.length-1;
+    Dialog.wikiPassage("dialog-pronoun-edit");Dialog.open();<</script>>
+<</button>><br><br>
+
+<<button "Remove selected pronoun set">>
+    <<run $pronouns.splice(_selected_set, 1)>>
+    <<script>>Dialog.empty();Dialog.wikiPassage("dialog-pronoun-settings");Dialog.open();<</script>>
+<</button>><br><br>
+
+<<button "Edit selected set">>
+    <<script>>Dialog.empty();Dialog.wikiPassage("dialog-pronoun-edit");Dialog.open();<</script>>
+<</button>><br><br>
+
+:: dialog-pronoun-edit
+<<set _cpn to $pronouns[_selected_set]>>\
+<<set _set_name to $pronouns[_selected_set].name>>\
+Set name: <<textbox "_set_name" _set_name>>
+
+<<set _plural_verbs to $pronouns[_selected_set].plural>>\
+Plural verbs: <<listbox "_plural_verbs" autoselect>>
+    <<option true>>
+    <<option false>>
+<</listbox>>
+//(_cpn.They <<verb _cpn.plural "''are''" "''is'' not">> using plural verbs.)//
+
+<<set _gender_terms to _cpn.gender_terms>>\
+Gendered terms: <<listbox "_gender_terms" autoselect>>
+    <<option "masculine" "m">>
+    <<option "feminine" "f">>
+    <<option "neutral" "o">>
+<</listbox>>
+//(_cpn.They <<verb _cpn.plural "are" "is">> a ''_cpn.person'')//
+
+Subjective: <<textbox "_subjective" _cpn.they>>
+//(''_cpn.They'' <<verb _cpn.plural "are" "is">> reading an IF.)//
+
+Objective: <<textbox "_objective" _cpn.them>>
+//(Watch ''_cpn.them'' make choices.)//
+
+Possessive determiner: <<textbox "_pdeterminer" _cpn.their>>
+//(It's becoming ''_cpn.their'' story.)//
+
+Possessive pronouns: <<textbox "_possessive" _cpn.theirs>>
+//(The choices are ''_cpn.theirs'' to make.)//
+
+Reflexive: <<textbox "_reflexive" _cpn.themself>>
+//(Watch them choose for ''_cpn.themself''.)//
+
+<<button "Save changes & refresh previews">>
+    <<set $pronouns[_selected_set] to new PronounSet(
+        [_set_name, _plural_verbs, _gender_terms, _subjective, _objective, _pdeterminer, _possessive, _reflexive]
+    )>>
+    <<script>>Dialog.empty();Dialog.wikiPassage("dialog-pronoun-edit");Dialog.open();<</script>>
+<</button>>
+
+<<button "Save & return to pronoun settings">>
+    <<set $pronouns[_selected_set] to new PronounSet(
+        [_set_name, _plural_verbs, _gender_terms, _subjective, _objective, _pdeterminer, _possessive, _reflexive]
+    )>>
+    <<script>>Dialog.empty();Dialog.wikiPassage("dialog-pronoun-settings");Dialog.open();<</script>>
+<</button>>
